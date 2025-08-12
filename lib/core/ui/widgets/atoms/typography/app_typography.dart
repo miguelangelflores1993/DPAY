@@ -1,0 +1,153 @@
+import 'package:app/shared/enums/app_typography_enum.dart';
+import 'package:flutter/material.dart';
+
+class AppTypography extends StatelessWidget {
+  const AppTypography({
+    super.key,
+    this.type = AppTypographyType.typo4,
+    this.child,
+    this.text,
+    this.icon,
+    this.dividerBorderRadius,
+    this.textColor,
+    this.dividerAlignment,
+    this.dividerColor,
+    this.showDivider = true,
+    this.dividerWidth,
+    this.dividerHeight,
+    this.backgroundImage,
+    this.backgroundImagecolorFilter,
+    this.fontWeight = FontWeight.w500,
+  }) : assert(
+          text != null || child != null,
+          'Either "text" or "child" must be provided to AppTypography.',
+        );
+
+  /// child of  type [Widget] is alternative to text key. text will get priority over child
+  final Widget? child;
+
+  /// text of type [String] is alternative to child. text will get priority over child
+  final String? text;
+
+  ///icon of type [Widget] used to pass icon or image
+  final Widget? icon;
+
+  /// Pass [Color] for dividerColor
+  final Color? dividerColor;
+
+  /// Pass [Color] for textColor
+  final Color? textColor;
+
+  /// dividerBorderRadius of type [BorderRadius] to alter the radius of the divider
+  final BorderRadius? dividerBorderRadius;
+
+  ///dividerAlignment of type [Alignment] used for aligning the divider to required alignment
+  final Alignment? dividerAlignment;
+
+  ///Pass [bool] value to show or hide the divider
+  final bool showDivider;
+
+  ///pass [double] type to increase or decrease the width of the divider
+  final double? dividerWidth;
+
+  ///pass [double] type to increase or decrease the height of the divider
+  final double? dividerHeight;
+
+  ///backgroundImage of type [ImageProvider] to set the background of [AppTypography]
+  final ImageProvider? backgroundImage;
+
+  ///backgroundImagecolorFilter of type [ColorFilter] to set the
+  ///background color of [AppTypography] only when backgroundImage is available
+  final ColorFilter? backgroundImagecolorFilter;
+
+  /// header type of [AppTypographyType] i.e, typo1, typo2, typo3, typo4, typo5, typo6
+  final AppTypographyType type;
+
+  ///pass [FontWeight] for FontWeight
+  final FontWeight fontWeight;
+
+  @override
+  Widget build(BuildContext context) {
+    double? fontSize;
+
+    if (type == AppTypographyType.typo1) {
+      fontSize = 25.0;
+    } else if (type == AppTypographyType.typo2) {
+      fontSize = 22.0;
+    } else if (type == AppTypographyType.typo3) {
+      fontSize = 19.0;
+    } else if (type == AppTypographyType.typo4) {
+      fontSize = 17.0;
+    } else if (type == AppTypographyType.typo5) {
+      fontSize = 15.0;
+    } else if (type == AppTypographyType.typo6) {
+      fontSize = 13.0;
+    }
+
+    return Container(
+      padding: EdgeInsets.all(backgroundImage != null ? 10 : 0),
+      decoration: BoxDecoration(
+        image: backgroundImage != null
+            ? DecorationImage(
+                image: backgroundImage!,
+                fit: BoxFit.cover,
+                colorFilter:
+                    backgroundImagecolorFilter ??
+                    const ColorFilter.mode(Colors.black54, BlendMode.darken),
+              )
+            : null,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              icon ?? Container(),
+              if (icon != null)
+                const Padding(padding: EdgeInsets.only(left: 10))
+              else
+                Container(),
+              if (text != null)
+                Expanded(
+                  child: Text(
+                    text!,
+                    style: TextStyle(
+                      color:
+                          textColor ??
+                          (backgroundImage != null
+                              ? Colors.white
+                              : Colors.black),
+                      fontSize: fontSize,
+                      letterSpacing: 0.3,
+                      fontWeight: fontWeight,
+                    ),
+                  ),
+                )
+              else
+                child!,
+            ],
+          ),
+          if (showDivider && fontSize != null)
+            Container(
+              margin: const EdgeInsets.only(top: 3, bottom: 3),
+              alignment: dividerAlignment,
+              child: Container(
+                width: dividerWidth ?? 70,
+                height: dividerHeight ?? (fontSize / 5),
+                decoration: BoxDecoration(
+                  color:
+                      dividerColor ??
+                      (backgroundImage != null ? Colors.white : Colors.black),
+                  borderRadius:
+                      dividerBorderRadius ??
+                      const BorderRadius.all(Radius.circular(5)),
+                ),
+              ),
+            )
+          else
+            Container(),
+        ],
+      ),
+    );
+  }
+}

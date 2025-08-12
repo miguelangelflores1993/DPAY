@@ -1,0 +1,57 @@
+import 'dart:async';
+
+import 'package:networking_flutter_dio/core/networking/api_service.dart';
+import 'package:networking_flutter_dio/core/networking/response_model.dart';
+import 'package:networking_flutter_dio/core/helper/typedefs.dart';
+
+abstract class ApiInterface {
+  const ApiInterface();
+
+  Future<T> deleteData<T>({
+    required String endpoint,
+    required T Function(ResponseModel<JSON> response) converter,
+    Object? data,
+    bool requiresAuthToken = true,
+  });
+
+  Future<PaginatedResponse<T>> getCollectionData<T>({
+    required String endpoint,
+    required T Function(JSON responseBody) converter,
+    JSON? queryParams,
+    String? language,
+    bool requiresAuthToken = true,
+    required String collectionKey,
+  });
+
+  Future<T> getDocumentData<T>({
+    required String endpoint,
+    required T Function(JSON responseBody) converter,
+    JSON? queryParams,
+    String? language,
+    bool requiresAuthToken = true,
+  });
+
+  Future<T> setData<T>({
+    required String endpoint,
+    required Object data,
+    required T Function(ResponseModel<JSON> response) converter,
+    bool requiresAuthToken = true,
+    void Function(int count, int total)? onSendProgress,
+  });
+  Future<T> updateData<T>({
+    required String endpoint,
+    required Object data,
+    JSON? queryParams,
+
+    required T Function(ResponseModel<JSON> response) converter,
+    bool requiresAuthToken = true,
+  });
+  Future<T> replaceData<T>({
+    required String endpoint,
+    required Object data,
+    JSON? queryParams,
+
+    required T Function(ResponseModel<JSON> response) converter,
+    bool requiresAuthToken = true,
+  });
+}

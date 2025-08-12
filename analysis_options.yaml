@@ -1,0 +1,17 @@
+analyzer:
+  exclude:
+    - packages/datec_latam_generate_feature_code/**
+  errors:
+    non_constant_identifier_names: ignore
+include: package:very_good_analysis/analysis_options.yaml
+formatter:
+  trailing_commas: preserve
+  page_width: 120
+  
+linter:
+  rules:
+    public_member_api_docs: false
+    sort_pub_dependencies: false
+    one_member_abstracts: false
+    lines_longer_than_80_chars: false
+    require_trailing_commas: true
