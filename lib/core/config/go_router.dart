@@ -1,8 +1,10 @@
+import 'package:app/homeview.dart';
 import 'package:app/modules/auth/presentation/pages/forgot_password/forgot_password_page.dart';
 import 'package:app/modules/auth/presentation/pages/login/login_page.dart';
 import 'package:app/modules/auth/presentation/pages/otp/otp_verification_page.dart';
 import 'package:app/modules/auth/presentation/pages/otp/retry_otp_verification_page.dart';
 import 'package:app/modules/auth/presentation/pages/register/register_page.dart';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -47,7 +49,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/login',
       name: 'login',
-      builder: (context, state) => LoginPage(),
+      builder: (context, state) => HomeView(),
     ),
 
     GoRoute(

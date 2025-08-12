@@ -11,7 +11,6 @@ class AppTheme {
 
   static ThemeData lightTheme = ThemeData(
     fontFamily: AppColors.fontFamily,
-
     scaffoldBackgroundColor: AppColors.backgroundColor,
     splashColor: Colors.grey.withValues(alpha: 0.2),
     colorScheme: const ColorScheme.light(

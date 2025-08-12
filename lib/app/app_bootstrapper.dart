@@ -88,18 +88,8 @@ class AppBootstrapper {
     void Function(Widget) appRunner,
     Widget app,
   ) async {
-    await SentryFlutter.init(
-      (options) {
-        options
-          ..dsn = sentryDns
-          ..tracesSampleRate = kDebugMode ? 1.0 : 0.7;
-      },
-      appRunner: () => appRunner(
-        DefaultAssetBundle(
-          bundle: SentryAssetBundle(),
-          child: app,
-        ),
-      ),
+    appRunner(
+        app,
     );
   }
 }
