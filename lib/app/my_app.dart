@@ -1,9 +1,7 @@
-import 'package:app/app/injection.dart';
 import 'package:app/core/config/go_router.dart';
 import 'package:app/core/modules/conectivity/bloc/conectivity_bloc.dart';
 import 'package:app/core/ui/theme/app_theme.dart';
 import 'package:app/modules/auth/presentation/pages/menu/get_profile_bloc.dart';
-import 'package:app/shared/bloc/native_utils_cubit.dart';
 import 'package:datec_latam_translations/datec_latam_translations.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +29,6 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider<ConnectivityBloc>(create: (_) => ConnectivityBloc()),
        
-        BlocProvider<NativeUtilsCubit>(create: (_) => NativeUtilsCubit(), lazy: false),
         BlocProvider<GetProfileBloc>(create: (_) => GetProfileBloc()),
       ],
       child: EasyLocalizationWrapper(

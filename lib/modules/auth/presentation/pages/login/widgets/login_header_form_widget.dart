@@ -16,17 +16,7 @@ class LoginHeaderWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () => context.goNamed('home'),
-            child: AppAdaptiveImage(
-              AppImages.logo01,
-              width: ResponsiveSize.getSize(
-                mobile: 40.w,
-                tablet: TabletSize(portrait: 30.w, horizontal: 20.w),
-              ),
-            ),
-          ),
+         
           SizedBox(height: 2.h),
           Text(
             AppStrings.loginTitle,

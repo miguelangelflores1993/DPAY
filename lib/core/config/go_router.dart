@@ -3,8 +3,6 @@ import 'package:app/modules/auth/presentation/pages/login/login_page.dart';
 import 'package:app/modules/auth/presentation/pages/otp/otp_verification_page.dart';
 import 'package:app/modules/auth/presentation/pages/otp/retry_otp_verification_page.dart';
 import 'package:app/modules/auth/presentation/pages/register/register_page.dart';
-import 'package:app/modules/auth/presentation/pages/security/change_password_page.dart';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -39,7 +37,7 @@ class FadeSlideTransitionPage extends CustomTransitionPage<void> {
 
 final GoRouter router = GoRouter(
   navigatorKey: rootNavigatorKey,
-  initialLocation: '/home', // Ruta de inicio
+  initialLocation: '/login', // Ruta de inicio
   routes: [
     GoRoute(
       path: '/forgot_password',
@@ -69,16 +67,16 @@ final GoRouter router = GoRouter(
     ),
     
 
-    ShellRoute(
-      navigatorKey: shellNavigatorKey,
-      builder: (context, state, child) {
-        return child;
-      },
-      routes: [
+    // ShellRoute(
+    //   navigatorKey: shellNavigatorKey,
+    //   builder: (context, state, child) {
+    //     return child;
+    //   },
+    //   routes: [
         
-        // Rutas dentro del ShellRoute
-      ],
-    ),
+    //     // Rutas dentro del ShellRoute
+    //   ],
+    // ),
 
   ],
 );

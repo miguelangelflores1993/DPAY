@@ -3,10 +3,7 @@ import 'dart:io';
 
 import 'package:app/core/config/environment.dart';
 import 'package:app/core/config/init.dart';
-import 'package:app/firebase_options_dev.dart' as dev;
-import 'package:app/firebase_options_prod.dart' as prod;
 import 'package:datec_latam_translations/datec_latam_translations.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -30,7 +27,6 @@ class AppBootstrapper {
   }) async {
     WidgetsFlutterBinding.ensureInitialized();
     await Future.wait([
-      _initializeFirebase(environment),
       initializeTranslations(),
       _setupLicenses(),
     ]);
@@ -41,14 +37,7 @@ class AppBootstrapper {
     await _setupSentrySDK(runApp, mainAppWidget);
   }
 
-  static Future<void> _initializeFirebase(ENV environment) async {
-    await Firebase.initializeApp(
-      name: environment == ENV.production ? 'egx-reloaded' : 'egx-app-dev',
-      options: environment == ENV.production
-          ? prod.DefaultFirebaseOptions.currentPlatform
-          : dev.DefaultFirebaseOptions.currentPlatform,
-    );
-  }
+
 
   static Future<void> _setupLicenses() async {
     LicenseRegistry.addLicense(() async* {

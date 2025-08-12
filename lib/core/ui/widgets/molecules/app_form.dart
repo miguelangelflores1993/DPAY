@@ -1,8 +1,6 @@
 import 'package:app/core/ui/theme/app_theme.dart';
 import 'package:app/core/ui/widgets/atoms/buttons/app_button.dart';
-import 'package:app/shared/bloc/native_utils_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:networking_flutter_dio/core/helper/typedefs.dart';
 import 'package:sizer/sizer.dart';
@@ -102,7 +100,6 @@ class _AppFormButtonState extends State<AppFormButton> {
 
   @override
   Widget build(BuildContext context) {
-    final nativeUtils = context.watch<NativeUtilsCubit>().state;
 
     return Container(
       color: widget.backgroundColorButton ?? Colors.transparent,
@@ -110,7 +107,7 @@ class _AppFormButtonState extends State<AppFormButton> {
         20,
         12,
         20,
-        (widget.footer != null) ? 1.h : (nativeUtils.isAndroid15andThreeNav ? 7.h : 2.5.h),
+        (widget.footer != null) ? 1.h : 2.5.h,
       ),
       child: Column(
         children: [
