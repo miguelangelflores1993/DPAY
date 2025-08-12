@@ -26,85 +26,83 @@ class LoginView extends StatelessWidget {
         child: SafeArea(
           child: LayoutBuilder(
             builder: (context, constraints) {
-              return SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                  child: IntrinsicHeight(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Spacer(flex: 2),
-                        // Logo
-                        Image.asset(
-                          'assets/logo.png',
-                          height: isSmallScreen ? 100 : 120,
-                          fit: BoxFit.contain,
+              return SizedBox(
+                height: constraints.maxHeight,
+                child: Column(
+                  children: [
+                    // Espaciado superior
+                    SizedBox(height: constraints.maxHeight * 0.15),
+                    // Logo
+                    Image.asset(
+                      'assets/logo.png',
+                      height: isSmallScreen ? 100 : 120,
+                      fit: BoxFit.contain,
+                    ),
+                    SizedBox(height: isSmallScreen ? 60 : 80),
+                    // Título
+                    Text(
+                      'Punto de venta',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: isSmallScreen ? 32 : 38,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    // Espaciado flexible
+                    SizedBox(height: constraints.maxHeight * 0.25),
+                    // Botón Crear cuenta
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: size.width * 0.08,
+                      ),
+                      child: Container(
+                        width: double.infinity,
+                        height: isSmallScreen ? 56 : 64,
+                        decoration: BoxDecoration(
+                          color: green,
+                          borderRadius: BorderRadius.circular(32),
                         ),
-                        SizedBox(height: isSmallScreen ? 60 : 80),
-                        // Título
-                        Text(
-                          'Punto de venta',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: isSmallScreen ? 32 : 38,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const Spacer(flex: 3),
-                        // Botón Crear cuenta
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: size.width * 0.08,
-                          ),
-                          child: Container(
-                            width: double.infinity,
-                            height: isSmallScreen ? 56 : 64,
-                            decoration: BoxDecoration(
-                              color: green,
-                              borderRadius: BorderRadius.circular(32),
-                            ),
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                borderRadius: BorderRadius.circular(32),
-                                onTap: () {
-                                  // Navegar a crear cuenta
-                                },
-                                child: Center(
-                                  child: Text(
-                                    'Crear cuenta',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: isSmallScreen ? 16 : 18,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(32),
+                            onTap: () {
+                              // Navegar a crear cuenta
+                            },
+                            child: Center(
+                              child: Text(
+                                'Crear cuenta',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: isSmallScreen ? 16 : 18,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
                           ),
                         ),
-                        SizedBox(height: isSmallScreen ? 24 : 32),
-                        // Botón Iniciar sesión
-                        GestureDetector(
-                          onTap: () {
-                            // Navegar a iniciar sesión
-                          },
-                          child: Text(
-                            'Iniciar sesión',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: isSmallScreen ? 16 : 18,
-                              fontWeight: FontWeight.w500,
-                              decoration: TextDecoration.underline,
-                              decorationColor: Colors.white,
-                            ),
-                          ),
-                        ),
-                        const Spacer(flex: 2),
-                      ],
+                      ),
                     ),
-                  ),
+                    SizedBox(height: isSmallScreen ? 24 : 32),
+                    // Botón Iniciar sesión
+                    GestureDetector(
+                      onTap: () {
+                        // Navegar a iniciar sesión
+                      },
+                      child: Text(
+                        'Iniciar sesión',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: isSmallScreen ? 16 : 18,
+                          fontWeight: FontWeight.w500,
+                          decoration: TextDecoration.underline,
+                          decorationColor: Colors.white,
+                        ),
+                      ),
+                    ),
+                    // Espaciado inferior
+                    SizedBox(height: constraints.maxHeight * 0.1),
+                  ],
                 ),
               );
             },
