@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+class qrview extends StatefulWidget {
+  const qrview({super.key});
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  State<qrview> createState() => _qrviewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _qrviewState extends State<qrview> {
   bool _isTransactionsExpanded = false;
   bool _isAdvancedViewExpanded = false;
 
@@ -21,7 +21,6 @@ class _HomeViewState extends State<HomeView> {
       colors: [Color(0xFF0E27A1), Color(0xff030A2E)],
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
-      stops: [0.0, 0.6],
     );
     const green = Color(0xFF32D583);
 
@@ -30,6 +29,7 @@ class _HomeViewState extends State<HomeView> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        automaticallyImplyLeading: false,
       ),
       extendBodyBehindAppBar: true,
       body: Container(
@@ -45,232 +45,143 @@ class _HomeViewState extends State<HomeView> {
             ),
             child: Column(
               children: [
-               
+                // Logo y título en contenedor
+            
+                Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: IconButton(
+                        color: Colors.white,
+                        onPressed: () {
+                          context.pop();
+                        },
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Center(
+                        child: Text(
+                          'Recargar QR',
+                          style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Image.asset(
+                  'assets/image/logo.png',
+                  height: 120,
+                ),
+                Text(
+                  'Recarga dCoins, descarga el QR y escanea con la app de tu Banco.',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
                 Container(
                   padding: EdgeInsets.all(20),
+                  width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.06),
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: Colors.white.withOpacity(0.1),
+                      color: Colors.white,
                       width: 1,
                     ),
                   ),
                   child: Column(
                     children: [
                       Image.asset(
-                        'assets/image/logo.png',
-                        height: 60,
-                        fit: BoxFit.contain,
+                        'assets/image/qr.png',
                       ),
-                      SizedBox(height: isSmallScreen ? 20 : 32),
-                      // Título
+                      SizedBox(
+                        height: 20,
+                      ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'dCoin',
+                            'Válido hasta',
                             style: TextStyle(
-                              color: green,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
+                              color: Colors.grey,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
-                          const SizedBox(width: 10),
+                          SizedBox(
+                            width: 10,
+                          ),
                           Text(
-                            '\$300,00',
+                            '30/05/2025 11:36',
                             style: TextStyle(
-                              color: green,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ],
                       ),
-                      Text(
-                        'Saldo actual',
-                        style: TextStyle(
-                          color: Colors.grey.shade400,
-                          fontSize: 14,
-                        ),
+                      SizedBox(
+                        height: 20,
                       ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 16),
-                // Botones principales
-                Expanded(
-                  child: GridView.count(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 16,
-                    crossAxisSpacing: 16,
-                    childAspectRatio: isSmallScreen ? 1.4 : 1.3,
-                    children: [
-                      _HomeButton(
-                        icon: Icons.qr_code_2,
-                        label: 'Paga QR',
-                        color: green,
-                        isSmallScreen: isSmallScreen,
-                        onTap: () {},
-                      ),
-                      _HomeButton(
-                        icon: Icons.upload_rounded,
-                        label: 'Recargar',
-                        color: green,
-                        isSmallScreen: isSmallScreen,
-                        onTap: () {
-                          context.push('/qr');
-                        },
-                      ),
-                      _HomeButton(
-                        icon: Icons.qr_code_2,
-                        label: 'Cobro QR',
-                        color: green,
-                        isSmallScreen: isSmallScreen,
-                        onTap: () {},
-                      ),
-                      _HomeButton(
-                        icon: Icons.link,
-                        label: 'Link de pagos',
-                        color: green,
-                        isSmallScreen: isSmallScreen,
-                        onTap: () {},
-                      ),
-                      _HomeButton(
-                        icon: Icons.credit_card,
-                        label: 'Tap Tarjeta',
-                        color: green,
-                        isSmallScreen: isSmallScreen,
-                        onTap: () {},
-                      ),
-                      _HomeButton(
-                        icon: Icons.account_balance_wallet_outlined,
-                        label: 'Pago en efectivo',
-                        color: green,
-                        isSmallScreen: isSmallScreen,
-                        onTap: () {},
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 16),
-                // Tarjetas expandibles apiladas
-                Container(
-                  margin: const EdgeInsets.only(bottom: 16),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.06),
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: Colors.white.withOpacity(0.1),
-                      width: 1,
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      // Tarjeta de Transacciones
-                      _ExpandableCard(
-                        title: 'Transacciones',
-                        icon: Icons.swap_vert,
-                        isExpanded: _isTransactionsExpanded,
-                        onTap: () {
-                          setState(() {
-                            _isTransactionsExpanded = !_isTransactionsExpanded;
-                          });
-                        },
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          _TransactionItem(
-                            icon: Icons.qr_code_2,
-                            title: 'Pago QR realizado',
-                            subtitle: 'Café Central',
-                            amount: '-\$5.50',
-                            amountColor: Colors.red.shade400,
-                            date: 'Hoy, 14:30',
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: Color(0xffE9EAEB),
+                              shape: BoxShape.circle,
+                            ),
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.download,
+                                color: Colors.black,
+                                size: 20,
+                              ),
+                            ),
                           ),
-                          _TransactionItem(
-                            icon: Icons.upload_rounded,
-                            title: 'Recarga exitosa',
-                            subtitle: 'Banco BCP',
-                            amount: '+\$100.00',
-                            amountColor: green,
-                            date: 'Ayer, 09:15',
-                          ),
-                          _TransactionItem(
-                            icon: Icons.link,
-                            title: 'Pago por link',
-                            subtitle: 'Restaurante El Bueno',
-                            amount: '-\$25.80',
-                            amountColor: Colors.red.shade400,
-                            date: '23 Nov, 19:45',
-                          ),
-                        ],
-                      ),
-
-                      // Separador
-                      Container(
-                        height: 1,
-                        color: Colors.white.withOpacity(0.1),
-                      ),
-
-                      // Tarjeta de Vista Avanzada
-                      _ExpandableCard(
-                        title: 'Vista avanzada',
-                        icon: Icons.grid_view,
-                        isExpanded: _isAdvancedViewExpanded,
-                        onTap: () {
-                          setState(() {
-                            _isAdvancedViewExpanded = !_isAdvancedViewExpanded;
-                          });
-                        },
-                        children: [
-                          _AdvancedViewItem(
-                            icon: Icons.analytics,
-                            title: 'Estadísticas',
-                            subtitle: 'Ver reportes detallados',
-                            onTap: () {},
-                          ),
-                          _AdvancedViewItem(
-                            icon: Icons.settings,
-                            title: 'Configuración',
-                            subtitle: 'Ajustes de la cuenta',
-                            onTap: () {},
-                          ),
-                          _AdvancedViewItem(
-                            icon: Icons.security,
-                            title: 'Seguridad',
-                            subtitle: 'Configurar PIN y biometría',
-                            onTap: () {},
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: Color(0xffE9EAEB),
+                              shape: BoxShape.circle,
+                            ),
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.ios_share_outlined,
+                                color: Colors.black,
+                                size: 20,
+                              ),
+                            ),
                           ),
                         ],
                       ),
                     ],
                   ),
                 ),
-
                 // Ayuda
-                Padding(
-                  padding: EdgeInsets.only(
-                    bottom: isSmallScreen ? 20 : 32,
-                  ),
-                  child: RichText(
-                    text: TextSpan(
-                      text: '¿Necesitas ayuda? ',
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: isSmallScreen ? 13 : 14,
-                      ),
-                      children: [
-                        TextSpan(
-                          text: 'Contáctanos',
-                          style: TextStyle(
-                            color: green,
-                            fontWeight: FontWeight.w600,
-                            fontSize: isSmallScreen ? 13 : 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
               ],
             ),
           ),

@@ -4,6 +4,7 @@ import 'package:app/modules/auth/presentation/pages/login/login_page.dart';
 import 'package:app/modules/auth/presentation/pages/otp/otp_verification_page.dart';
 import 'package:app/modules/auth/presentation/pages/otp/retry_otp_verification_page.dart';
 import 'package:app/modules/auth/presentation/pages/register/register_page.dart';
+import 'package:app/qr.dart';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -42,9 +43,9 @@ final GoRouter router = GoRouter(
   initialLocation: '/login', // Ruta de inicio
   routes: [
     GoRoute(
-      path: '/forgot_password',
-      name: 'forgot_password',
-      builder: (context, state) => const ForgotPasswordPage(),
+      path: '/qr',
+      name: 'qr',
+      builder: (context, state) => const qrview(),
     ),
     GoRoute(
       path: '/login',
