@@ -5,6 +5,7 @@ import 'package:app/modules/auth/presentation/pages/otp/otp_verification_page.da
 import 'package:app/modules/auth/presentation/pages/otp/retry_otp_verification_page.dart';
 import 'package:app/modules/auth/presentation/pages/register/register_page.dart';
 import 'package:app/qr.dart';
+import 'package:app/qrcharge_view.dart';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -45,7 +46,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/qr',
       name: 'qr',
-      builder: (context, state) => const qrview(),
+      builder: (context, state) => const QrView(),
     ),
     GoRoute(
       path: '/login',
@@ -67,6 +68,11 @@ final GoRouter router = GoRouter(
       path: '/retry_otp',
       name: 'retry_otp',
       builder: (context, state) => RetryOtpVerificationPage(),
+    ),
+    GoRoute(
+      path: '/qrview_charge',
+      name: 'qrview_charge',
+      builder: (context, state) => QrChargeView(),
     ),
     
 

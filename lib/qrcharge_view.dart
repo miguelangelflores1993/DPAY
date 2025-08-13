@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class QrView extends StatefulWidget {
-  const QrView({super.key});
+class QrChargeView extends StatelessWidget {
+  const QrChargeView({super.key});
 
-  @override
-  State<QrView> createState() => _QrViewState();
-}
-
-class _QrViewState extends State<QrView> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final size = mediaQuery.size;
     final padding = mediaQuery.padding;
-    final availableHeight = size.height - padding.top - padding.bottom;
 
     const backgroundGradient = LinearGradient(
       colors: [Color(0xFF0E27A1), Color(0xff030A2E)],
@@ -48,40 +42,15 @@ class _QrViewState extends State<QrView> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        // Header con botón de regreso y título
-                        _buildHeader(context, availableHeight),
-                        
+                        _buildHeader(context),
                         const SizedBox(height: 20),
-                        
-                        // Logo
                         Image.asset(
                           'assets/image/logo.png',
                           height: 100,
                           fit: BoxFit.contain,
                         ),
-                        
-                        const SizedBox(height: 16),
-                        
-                        // Descripción
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-                          child: const Text(
-                            'Recarga dCoins, descarga el QR y escanea con la app de tu Banco.',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        
                         const SizedBox(height: 24),
-                        
-                        // Tarjeta del QR
                         _buildQrCard(size),
-                        
-                        // Espacio adicional en la parte inferior para evitar overflow
                         SizedBox(height: padding.bottom > 0 ? padding.bottom : 20),
                       ],
                     ),
@@ -95,7 +64,7 @@ class _QrViewState extends State<QrView> {
     );
   }
 
-  Widget _buildHeader(BuildContext context, double availableHeight) {
+  Widget _buildHeader(BuildContext context) {
     return Row(
       children: [
         Container(
@@ -122,16 +91,16 @@ class _QrViewState extends State<QrView> {
         const SizedBox(width: 12),
         const Expanded(
           child: Text(
-            'Recargar QR',
+            'Cobro QR',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 18,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,
           ),
         ),
-        const SizedBox(width: 56), // Espacio equivalente al botón de retroceso
+        const SizedBox(width: 56),
       ],
     );
   }
@@ -145,10 +114,10 @@ class _QrViewState extends State<QrView> {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(28),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withOpacity(0.08),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -157,7 +126,6 @@ class _QrViewState extends State<QrView> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // QR Code
           Container(
             constraints: BoxConstraints(
               maxHeight: size.width * 0.6,
@@ -168,18 +136,15 @@ class _QrViewState extends State<QrView> {
               fit: BoxFit.contain,
             ),
           ),
-          
           const SizedBox(height: 20),
-          
-          // Fecha de validez
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
               Text(
-                'Válido hasta',
+                'Valid until',
                 style: TextStyle(
                   color: Colors.grey,
-                  fontSize: 14,
+                  fontSize: 15,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -188,29 +153,35 @@ class _QrViewState extends State<QrView> {
                 '30/05/2025 11:36',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 14,
+                  fontSize: 15,
                   fontWeight: FontWeight.w500,
                 ),
               ),
             ],
           ),
-          
-          const SizedBox(height: 20),
-          
-          // Botones de acción
+          const SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _buildActionButton(
                 icon: Icons.download,
+                label: 'Download',
                 onPressed: () {
-                  // Lógica para descargar
+                  // Download logic
                 },
               ),
               _buildActionButton(
                 icon: Icons.ios_share_outlined,
+                label: 'Share',
                 onPressed: () {
-                  // Lógica para compartir
+                  // Share logic
+                },
+              ),
+              _buildActionButton(
+                icon: Icons.edit_outlined,
+                label: 'Edit',
+                onPressed: () {
+                  // Edit logic
                 },
               ),
             ],
@@ -222,28 +193,42 @@ class _QrViewState extends State<QrView> {
 
   Widget _buildActionButton({
     required IconData icon,
+    required String label,
     required VoidCallback onPressed,
   }) {
-    return Container(
-      width: 55,
-      height: 55,
-      decoration: BoxDecoration(
-        color: const Color(0xffE9EAEB),
-        shape: BoxShape.circle,
-      ),
-      child: Material(
-        color: Colors.transparent,
-        shape: const CircleBorder(),
-        child: InkWell(
-          customBorder: const CircleBorder(),
-          onTap: onPressed,
-          child: Icon(
-            icon,
-            color: Colors.black,
-            size: 24,
+    return Column(
+      children: [
+        Container(
+          width: 55,
+          height: 55,
+          decoration: BoxDecoration(
+            color: const Color(0xffE9EAEB),
+            shape: BoxShape.circle,
+          ),
+          child: Material(
+            color: Colors.transparent,
+            shape: const CircleBorder(),
+            child: InkWell(
+              customBorder: const CircleBorder(),
+              onTap: onPressed,
+              child: Icon(
+                icon,
+                color: Colors.black,
+                size: 26,
+              ),
+            ),
           ),
         ),
-      ),
+        const SizedBox(height: 6),
+        Text(
+          label,
+          style: const TextStyle(
+            color: Color(0xFF6B7280),
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
     );
   }
 }
