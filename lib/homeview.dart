@@ -1,7 +1,10 @@
+import 'package:app/advancedview.dart';
+import 'package:app/cashpayment_view.dart';
 import 'package:app/paymentlink_view.dart';
 import 'package:app/qrcharge_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:show_up_animation/show_up_animation.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -19,7 +22,7 @@ class _HomeViewState extends State<HomeView> {
       colors: [
         Color(0xff030A2E),
         Color(0xFF0E27A1),
-         Color(0xff030A2E),
+        Color(0xff030A2E),
       ],
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
@@ -185,7 +188,15 @@ class _HomeViewState extends State<HomeView> {
                               icon: Icons.account_balance_wallet_outlined,
                               label: 'Pago en efectivo',
                               color: green,
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  // ignore: inference_failure_on_instance_creation
+                                  MaterialPageRoute(
+                                    builder: (context) => const CashPaymentView(),
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),
@@ -201,7 +212,7 @@ class _HomeViewState extends State<HomeView> {
                                 left: 0,
                                 right: 0,
                                 top: 0,
-                                child: GestureDetector(
+                                  child: GestureDetector(
                                   onTap: () => _showTransactionsSheet(context),
                                   child: Container(
                                     height: 80,
@@ -210,7 +221,6 @@ class _HomeViewState extends State<HomeView> {
                                       borderRadius: const BorderRadius.only(
                                         topLeft: Radius.circular(24),
                                         topRight: Radius.circular(24),
-                                        
                                       ),
                                       boxShadow: [
                                         BoxShadow(
@@ -220,17 +230,17 @@ class _HomeViewState extends State<HomeView> {
                                         ),
                                       ],
                                     ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
+                                    child: const Padding(
+                                      padding: EdgeInsets.fromLTRB(20, 20, 20, 16),
                                       child: Row(
                                         children: [
-                                          const Icon(
+                                          Icon(
                                             Icons.swap_vert,
                                             color: Color(0xFF313A4E),
                                             size: 24,
                                           ),
-                                          const SizedBox(width: 12),
-                                          const Expanded(
+                                          SizedBox(width: 12),
+                                          Expanded(
                                             child: Text(
                                               'Transacciones',
                                               style: TextStyle(
@@ -240,7 +250,7 @@ class _HomeViewState extends State<HomeView> {
                                               ),
                                             ),
                                           ),
-                                          const Text(
+                                          Text(
                                             'Ver todo',
                                             style: TextStyle(
                                               color: Color(0xFF313A4E),
@@ -248,8 +258,8 @@ class _HomeViewState extends State<HomeView> {
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
-                                          const SizedBox(width: 8),
-                                          const Icon(
+                                          SizedBox(width: 8),
+                                          Icon(
                                             Icons.arrow_forward_ios,
                                             color: Color(0xFF313A4E),
                                             size: 16,
@@ -265,58 +275,90 @@ class _HomeViewState extends State<HomeView> {
                                 left: 0,
                                 right: 0,
                                 bottom: 0,
-                                child: Container(
-                                  height: 80,
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFF3B4252),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(16),
-                                      topRight: Radius.circular(16),
-                                      
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.15),
-                                        blurRadius: 12,
-                                        offset: const Offset(0, 6),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      PageRouteBuilder(
+                                        transitionDuration: const Duration(milliseconds:800),
+                                        pageBuilder: (context, animation, secondaryAnimation) {
+                                          return ShowUpAnimation(
+                                            delayStart: const Duration(milliseconds: 50),
+                                            animationDuration: const Duration(milliseconds: 700),
+                                            curve: Curves.easeOut,
+                                            direction: Direction.vertical,
+                                            offset: -0.5, // negativo = desde abajo hacia arriba
+                                            child: const AdvancedView(),
+                                          );
+                                        },
+                                        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                          // Fade + movimiento desde abajo
+                                          final slideAnimation = Tween<Offset>(
+                                            begin: const Offset(0, 1), // fuera de pantalla abajo
+                                            end: Offset.zero,
+                                          ).animate(animation);
+
+                                          return SlideTransition(
+                                            position: slideAnimation,
+                                            child: child,
+                                          );
+                                        },
                                       ),
-                                    ],
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
-                                    child: Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.grid_view,
-                                          color: Colors.white,
-                                          size: 24,
-                                        ),
-                                        const SizedBox(width: 12),
-                                        const Expanded(
-                                          child: Text(
-                                            'Vista avanzada',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                        const Text(
-                                          'Ver todo',
-                                          style: TextStyle(
-                                            color: Colors.white70,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 8),
-                                        const Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: Colors.white70,
-                                          size: 16,
+                                    );
+                                  },
+
+                                  child: Container(
+                                    height: 80,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFF3B4252),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(16),
+                                        topRight: Radius.circular(16),
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.15),
+                                          blurRadius: 12,
+                                          offset: const Offset(0, 6),
                                         ),
                                       ],
+                                    ),
+                                    child: const Padding(
+                                      padding: EdgeInsets.fromLTRB(20, 16, 20, 20),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.grid_view,
+                                            color: Colors.white,
+                                            size: 24,
+                                          ),
+                                          SizedBox(width: 12),
+                                          Expanded(
+                                            child: Text(
+                                              'Vista avanzada',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                          Text(
+                                            'Ver todo',
+                                            style: TextStyle(
+                                              color: Colors.white70,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          SizedBox(width: 8),
+                                          Icon(
+                                            Icons.arrow_forward_ios,
+                                            color: Colors.white70,
+                                            size: 16,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -358,6 +400,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
   void _showTransactionsSheet(BuildContext context) {
+    // ignore: inference_failure_on_function_invocation
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -396,7 +439,7 @@ class _HomeViewState extends State<HomeView> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Transacciones',
                                 style: TextStyle(
                                   color: Color(0xFF313A4E),

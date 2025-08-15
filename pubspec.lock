@@ -1197,6 +1197,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  show_up_animation:
+    dependency: "direct main"
+    description:
+      name: show_up_animation
+      sha256: "31316aac032b9d56ef3eec0e6ea572fa2e415d17cf7406003d19d866f8246c69"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.2"
   sizer:
     dependency: "direct main"
     description:
