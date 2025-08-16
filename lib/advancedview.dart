@@ -6,16 +6,15 @@ class AdvancedView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: Stack(
         children: [
-          // Blue gradient header section
+          // Fondo azul con header y grid
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
                   Color(0xff030A2E),
                   Color(0xFF0E27A1),
-                  Color(0xff030A2E),
                 ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -23,217 +22,192 @@ class AdvancedView extends StatelessWidget {
             ),
             child: SafeArea(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Top bar with menu, help and close icons
-                  Padding(
-                    padding: const EdgeInsets.all(20),
+                  // Top bar
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          width: 48,
-                          height: 48,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.1),
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.menu,
-                            color: Colors.white,
-                            size: 24,
-                          ),
-                        ),
+                        _CircleIcon(icon: Icons.menu),
                         Row(
                           children: [
-                            Container(
-                              width: 48,
-                              height: 48,
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.1),
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(
-                                Icons.help_outline,
-                                color: Colors.white,
-                                size: 24,
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Container(
-                              width: 48,
-                              height: 48,
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.1),
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(
-                                Icons.close,
-                                color: Colors.white,
-                                size: 24,
-                              ),
-                            ),
+                            _CircleIcon(icon: Icons.help_outline),
+                            SizedBox(width: 12),
+                            _CircleIcon(icon: Icons.close),
                           ],
                         ),
                       ],
                     ),
                   ),
-                  
-                  // Greeting text
+                  // Saludo
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        '¡Hello! Juan Pablo',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    child: Text(
+                      '¡Hola! Juan Pablo',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
+                  const SizedBox(height: 32),
                   
-                  const SizedBox(height: 40),
-                  
-                  // Service icons grid
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      children: [
-                        // First row
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            _ServiceIcon(
-                              icon: Icons.qr_code,
-                              label: 'QR\nCharge',
-                            ),
-                            _ServiceIcon(
-                              icon: Icons.link,
-                              label: 'Payment\nLink',
-                            ),
-                            _ServiceIcon(
-                              icon: Icons.credit_card,
-                              label: 'Card\nTap',
-                            ),
-                            _ServiceIcon(
-                              icon: Icons.account_balance_wallet,
-                              label: 'Cash\nPayment',
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 30),
-                        
-                        // Second row
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            _ServiceIcon(
-                              icon: Icons.phone_android,
-                              label: 'Top-ups',
-                            ),
-                            _ServiceIcon(
-                              icon: Icons.lightbulb_outline,
-                              label: 'Services',
-                            ),
-                            _ServiceIcon(
-                              icon: Icons.account_balance,
-                              label: 'Financial\nCorrespondent',
-                            ),
-                            const SizedBox(width: 80), // Empty space for alignment
-                          ],
-                        ),
-                      ],
+                  // Grid de servicios 4x3 - Versión mejorada
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: GridView.count(
+                        crossAxisCount: 4,
+                        mainAxisSpacing: 16,
+                        crossAxisSpacing: 16,
+                        childAspectRatio: 0.9,
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: [
+                          _ServiceButton(
+                            icon: Icons.qr_code,
+                            label: 'Cobro QR',
+                            onTap: () {},
+                          ),
+                          _ServiceButton(
+                            icon: Icons.link,
+                            label: 'Link de pagos',
+                            onTap: () {},
+                          ),
+                          _ServiceButton(
+                            icon: Icons.credit_card,
+                            label: 'Tap Tarjeta',
+                            onTap: () {},
+                          ),
+                          _ServiceButton(
+                            icon: Icons.account_balance_wallet,
+                            label: 'Pago en efectivo',
+                            onTap: () {},
+                          ),
+                          _ServiceButton(
+                            icon: Icons.phone_android,
+                            label: 'Recargas',
+                            onTap: () {},
+                          ),
+                          _ServiceButton(
+                            icon: Icons.lightbulb_outline,
+                            label: 'Servicios',
+                            onTap: () {},
+                          ),
+                          _ServiceButton(
+                            icon: Icons.account_balance,
+                            label: 'Corresponsal financiero',
+                            onTap: () {},
+                          ),
+                          const SizedBox(), // Espacio vacío para completar la cuadrícula
+                        ],
+                      ),
                     ),
                   ),
-                  
-                  const SizedBox(height: 40),
                 ],
               ),
             ),
           ),
           
-          // White section with transactions
-          Expanded(
-            child: Container(
-              color: Colors.white,
-              child: Column(
-                children: [
-                  // Transactions header
-                  Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Transactions',
-                              style: TextStyle(
-                                color: Color(0xFF313A4E),
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
+          // DraggableScrollableSheet para transacciones
+          DraggableScrollableSheet(
+            initialChildSize: 0.48,
+            minChildSize: 0.2,
+            maxChildSize: 0.95,
+            builder: (context, scrollController) {
+              return Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 16,
+                      offset: Offset(0, -4),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Transacciones',
+                                style: TextStyle(
+                                  color: Color(0xFF313A4E),
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              'Friday, January 30',
-                              style: TextStyle(
-                                color: Colors.grey[600],
-                                fontSize: 14,
+                              SizedBox(height: 4),
+                              Text(
+                                'Viernes, 30 de enero',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 14,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        Text(
-                          'View all',
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
+                            ],
                           ),
-                        ),
-                      ],
+                          Text(
+                            'Ver todo',
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  
-                  // Transaction list
-                  Expanded(
-                    child: ListView(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      children: [
-                        _TransactionItem(
-                          icon: Icons.qr_code,
-                          title: 'QR Payment',
-                          subtitle: 'Payment ID: 1234\nClient: Juan Pérez',
-                          amount: 'Bs 150.00',
-                        ),
-                        _TransactionItem(
-                          icon: Icons.link,
-                          title: 'Payment Link',
-                          subtitle: 'Payment ID: 1234\nClient: Juan Pérez',
-                          amount: 'Bs 5,000.00',
-                        ),
-                        _TransactionItem(
-                          icon: Icons.account_balance_wallet,
-                          title: 'Cash Payment',
-                          subtitle: 'Payment ID: 1234',
-                          amount: 'Bs 40.00',
-                        ),
-                        _TransactionItem(
-                          icon: Icons.link,
-                          title: 'Payment Link',
-                          subtitle: '',
-                          amount: 'Bs 5,000.00',
-                        ),
-                      ],
+                    Expanded(
+                      child: ListView(
+                        controller: scrollController,
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                        children: const [
+                          _TransactionItem(
+                            icon: Icons.qr_code,
+                            title: 'Pago por QR',
+                            subtitle1: 'Payment ID: 1234',
+                            subtitle2: 'Cliente: Juan Pérez',
+                            amount: 'Bs 150,00',
+                          ),
+                          _TransactionItem(
+                            icon: Icons.link,
+                            title: 'Link de pago',
+                            subtitle1: 'Payment ID: 1234',
+                            subtitle2: 'Cliente: Juan Pérez',
+                            amount: 'Bs 5.000,00',
+                          ),
+                          _TransactionItem(
+                            icon: Icons.account_balance_wallet,
+                            title: 'Pago en efectivo',
+                            subtitle1: 'Payment ID: 1234',
+                            subtitle2: '',
+                            amount: 'Bs 40,00',
+                          ),
+                          _TransactionItem(
+                            icon: Icons.link,
+                            title: 'Link de pago',
+                            subtitle1: 'Payment ID: 1234',
+                            subtitle2: 'Cliente: Juan Pérez',
+                            amount: 'Bs 5.000,00',
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
+                  ],
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -254,15 +228,15 @@ class AdvancedView extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _BottomNavItem(
+            const _BottomNavItem(
               icon: Icons.home_outlined,
-              label: 'Home',
+              label: 'Inicio',
               isActive: false,
             ),
-            _BottomNavItem(
+            const _BottomNavItem(
               icon: Icons.receipt_long_outlined,
-              label: 'Transactions',
-              isActive: false,
+              label: 'Transacciones',
+              isActive: true,
             ),
             Container(
               width: 56,
@@ -277,14 +251,14 @@ class AdvancedView extends StatelessWidget {
                 size: 28,
               ),
             ),
-            _BottomNavItem(
+            const _BottomNavItem(
               icon: Icons.qr_code_outlined,
-              label: 'Affiliate QR',
+              label: 'QR afiliado',
               isActive: false,
             ),
-            _BottomNavItem(
+            const _BottomNavItem(
               icon: Icons.account_circle_outlined,
-              label: 'Account',
+              label: 'Cuenta',
               isActive: false,
             ),
           ],
@@ -294,64 +268,92 @@ class AdvancedView extends StatelessWidget {
   }
 }
 
-class _ServiceIcon extends StatelessWidget {
+// Ícono circular para el header
+class _CircleIcon extends StatelessWidget {
   final IconData icon;
-  final String label;
-
-  const _ServiceIcon({
-    required this.icon,
-    required this.label,
-  });
-
+  const _CircleIcon({required this.icon});
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 80,
-          height: 80,
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Icon(
-            icon,
-            color: const Color(0xFF12B76A),
-            size: 32,
-          ),
-        ),
-        const SizedBox(height: 12),
-        Text(
-          label,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
+    return Container(
+      width: 48,
+      height: 48,
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.1),
+        shape: BoxShape.circle,
+      ),
+      child: Icon(icon, color: Colors.white, size: 24),
     );
   }
 }
 
+// Widget para los botones de servicio - Versión mejorada
+class _ServiceButton extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  const _ServiceButton({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.08),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Icon(
+              icon,
+              color: const Color(0xFF12B76A),
+              size: 28,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// Ítem de transacción
 class _TransactionItem extends StatelessWidget {
   final IconData icon;
   final String title;
-  final String subtitle;
+  final String subtitle1;
+  final String subtitle2;
   final String amount;
 
   const _TransactionItem({
     required this.icon,
     required this.title,
-    required this.subtitle,
+    required this.subtitle1,
+    required this.subtitle2,
     required this.amount,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: 18),
       child: Row(
         children: [
           Container(
@@ -359,7 +361,7 @@ class _TransactionItem extends StatelessWidget {
             height: 48,
             decoration: BoxDecoration(
               color: const Color(0xFF12B76A).withOpacity(0.1),
-              borderRadius: BorderRadius.circular(12),
+              shape: BoxShape.circle,
             ),
             child: Icon(
               icon,
@@ -380,17 +382,21 @@ class _TransactionItem extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                if (subtitle.isNotEmpty) ...[
-                  const SizedBox(height: 4),
+                Text(
+                  subtitle1,
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 13,
+                  ),
+                ),
+                if (subtitle2.isNotEmpty)
                   Text(
-                    subtitle,
+                    subtitle2,
                     style: TextStyle(
                       color: Colors.grey[600],
-                      fontSize: 12,
-                      height: 1.4,
+                      fontSize: 13,
                     ),
                   ),
-                ],
               ],
             ),
           ),
@@ -408,6 +414,7 @@ class _TransactionItem extends StatelessWidget {
   }
 }
 
+// Bottom nav
 class _BottomNavItem extends StatelessWidget {
   final IconData icon;
   final String label;

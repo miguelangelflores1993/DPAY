@@ -18,6 +18,19 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final isSmallScreen = size.height < 700 || size.width < 380;
+
+    // Responsive paddings and font sizes
+    final horizontalPadding = isSmallScreen ? 10.0 : 20.0;
+    final verticalPadding = isSmallScreen ? 10.0 : 20.0;
+    final headerFontSize = isSmallScreen ? 24.0 : 32.0;
+    final coinFontSize = isSmallScreen ? 22.0 : 30.0;
+    final gridSpacing = isSmallScreen ? 10.0 : 16.0;
+    final gridAspectRatio = isSmallScreen ? 1.2 : 1.6;
+    final cardHeight = isSmallScreen ? 110.0 : 140.0;
+    final cardItemHeight = isSmallScreen ? 60.0 : 80.0;
+
     const backgroundGradient = LinearGradient(
       colors: [
         Color(0xff030A2E),
@@ -42,14 +55,20 @@ class _HomeViewState extends State<HomeView> {
                     minHeight: constraints.maxHeight,
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPadding,
+                      vertical: verticalPadding,
+                    ),
                     child: Column(
-                      mainAxisSize: MainAxisSize.min,
+                      mainAxisSize: MainAxisSize.max,
                       children: [
                         // Encabezado
                         Container(
                           width: double.infinity,
-                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                          padding: EdgeInsets.symmetric(
+                            vertical: isSmallScreen ? 8 : 10,
+                            horizontal: isSmallScreen ? 8 : 16,
+                          ),
                           decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(24),
@@ -66,13 +85,13 @@ class _HomeViewState extends State<HomeView> {
                                 children: [
                                   // Reemplazamos el logo por texto dPay
                                   RichText(
-                                    text: const TextSpan(
+                                    text: TextSpan(
                                       children: [
                                         TextSpan(
                                           text: 'd',
                                           style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 32,
+                                            fontSize: headerFontSize,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
@@ -80,17 +99,17 @@ class _HomeViewState extends State<HomeView> {
                                           text: 'Pay',
                                           style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 32,
+                                            fontSize: headerFontSize,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  const SizedBox(width: 8),
+                                  SizedBox(width: isSmallScreen ? 6 : 8),
                                   Container(
-                                    width: 24,
-                                    height: 24,
+                                    width: isSmallScreen ? 18 : 24,
+                                    height: isSmallScreen ? 18 : 24,
                                     decoration: BoxDecoration(
                                       color: green,
                                       borderRadius: BorderRadius.circular(6),
@@ -107,38 +126,38 @@ class _HomeViewState extends State<HomeView> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 18),
-                              const Text(
+                              SizedBox(height: isSmallScreen ? 12 : 18),
+                              Text(
                                 'dCoin \$300,00',
                                 style: TextStyle(
                                   color: green,
-                                  fontSize: 30,
+                                  fontSize: coinFontSize,
                                   fontWeight: FontWeight.bold,
                                   letterSpacing: 0.5,
                                 ),
                               ),
-                              const SizedBox(height: 8),
-                              const Text(
+                              SizedBox(height: isSmallScreen ? 6 : 8),
+                              Text(
                                 'Saldo actual',
                                 style: TextStyle(
                                   color: Colors.white70,
-                                  fontSize: 15,
+                                  fontSize: isSmallScreen ? 12 : 15,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        const SizedBox(height: 12),
+                        SizedBox(height: isSmallScreen ? 8 : 12),
 
                         // Grid de botones
                         GridView.count(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           crossAxisCount: 2,
-                          mainAxisSpacing: 16,
-                          crossAxisSpacing: 16,
-                          childAspectRatio: 1.6,
+                          mainAxisSpacing: gridSpacing,
+                          crossAxisSpacing: gridSpacing,
+                          childAspectRatio: gridAspectRatio,
                           children: [
                             _HomeButton(
                               icon: Icons.qr_code_2,
@@ -152,24 +171,28 @@ class _HomeViewState extends State<HomeView> {
                                   ),
                                 );
                               },
+                              isSmallScreen: isSmallScreen,
                             ),
                             _HomeButton(
                               icon: Icons.upload_rounded,
                               label: 'Recargar',
                               color: green,
                               onTap: () => context.push('/qr'),
+                              isSmallScreen: isSmallScreen,
                             ),
                             _HomeButton(
                               icon: Icons.qr_code_2,
                               label: 'Cobro QR',
                               color: green,
                               onTap: () {},
+                              isSmallScreen: isSmallScreen,
                             ),
                             _HomeButton(
                               icon: Icons.credit_card,
                               label: 'Tap Tarjeta',
                               color: green,
                               onTap: () {},
+                              isSmallScreen: isSmallScreen,
                             ),
                             _HomeButton(
                               icon: Icons.link,
@@ -183,6 +206,7 @@ class _HomeViewState extends State<HomeView> {
                                   ),
                                 );
                               },
+                              isSmallScreen: isSmallScreen,
                             ),
                             _HomeButton(
                               icon: Icons.account_balance_wallet_outlined,
@@ -191,34 +215,34 @@ class _HomeViewState extends State<HomeView> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  // ignore: inference_failure_on_instance_creation
                                   MaterialPageRoute(
                                     builder: (context) => const CashPaymentView(),
                                   ),
                                 );
                               },
+                              isSmallScreen: isSmallScreen,
                             ),
                           ],
                         ),
-                        const SizedBox(height: 24),
+                        SizedBox(height: isSmallScreen ? 16 : 24),
 
-                        // Cards apiladas - ESTRUCTURA COMPLETAMENTE NUEVA
+                        // Cards apiladas
                         Container(
-                          height: 140, // Altura fija para el stack
+                          height: cardHeight,
                           child: Stack(
                             children: [
-                              // Card de Transacciones (fondo - blanca)
+                              // Card de Transacciones
                               Positioned(
                                 left: 0,
                                 right: 0,
                                 top: 0,
-                                  child: GestureDetector(
+                                child: GestureDetector(
                                   onTap: () => _showTransactionsSheet(context),
                                   child: Container(
-                                    height: 80,
+                                    height: cardItemHeight,
                                     decoration: BoxDecoration(
                                       color: Colors.grey.shade200,
-                                      borderRadius: const BorderRadius.only(
+                                      borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(24),
                                         topRight: Radius.circular(24),
                                       ),
@@ -226,26 +250,31 @@ class _HomeViewState extends State<HomeView> {
                                         BoxShadow(
                                           color: Colors.black.withOpacity(0.1),
                                           blurRadius: 8,
-                                          offset: const Offset(0, 4),
+                                          offset: Offset(0, 4),
                                         ),
                                       ],
                                     ),
-                                    child: const Padding(
-                                      padding: EdgeInsets.fromLTRB(20, 20, 20, 16),
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                        isSmallScreen ? 12 : 20,
+                                        isSmallScreen ? 12 : 20,
+                                        isSmallScreen ? 12 : 20,
+                                        isSmallScreen ? 8 : 16,
+                                      ),
                                       child: Row(
                                         children: [
                                           Icon(
                                             Icons.swap_vert,
                                             color: Color(0xFF313A4E),
-                                            size: 24,
+                                            size: isSmallScreen ? 20 : 24,
                                           ),
-                                          SizedBox(width: 12),
+                                          SizedBox(width: isSmallScreen ? 8 : 12),
                                           Expanded(
                                             child: Text(
                                               'Transacciones',
                                               style: TextStyle(
                                                 color: Color(0xFF313A4E),
-                                                fontSize: 18,
+                                                fontSize: isSmallScreen ? 15 : 18,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
@@ -254,15 +283,15 @@ class _HomeViewState extends State<HomeView> {
                                             'Ver todo',
                                             style: TextStyle(
                                               color: Color(0xFF313A4E),
-                                              fontSize: 16,
+                                              fontSize: isSmallScreen ? 13 : 16,
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
-                                          SizedBox(width: 8),
+                                          SizedBox(width: isSmallScreen ? 6 : 8),
                                           Icon(
                                             Icons.arrow_forward_ios,
                                             color: Color(0xFF313A4E),
-                                            size: 16,
+                                            size: isSmallScreen ? 13 : 16,
                                           ),
                                         ],
                                       ),
@@ -270,7 +299,7 @@ class _HomeViewState extends State<HomeView> {
                                   ),
                                 ),
                               ),
-                              // Card de Vista Avanzada (frente - gris oscura)
+                              // Card de Vista avanzada
                               Positioned(
                                 left: 0,
                                 right: 0,
@@ -280,21 +309,20 @@ class _HomeViewState extends State<HomeView> {
                                     Navigator.push(
                                       context,
                                       PageRouteBuilder(
-                                        transitionDuration: const Duration(milliseconds:800),
+                                        transitionDuration: const Duration(milliseconds: 800),
                                         pageBuilder: (context, animation, secondaryAnimation) {
                                           return ShowUpAnimation(
                                             delayStart: const Duration(milliseconds: 50),
                                             animationDuration: const Duration(milliseconds: 700),
                                             curve: Curves.easeOut,
                                             direction: Direction.vertical,
-                                            offset: -0.5, // negativo = desde abajo hacia arriba
+                                            offset: -0.5,
                                             child: const AdvancedView(),
                                           );
                                         },
                                         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                          // Fade + movimiento desde abajo
                                           final slideAnimation = Tween<Offset>(
-                                            begin: const Offset(0, 1), // fuera de pantalla abajo
+                                            begin: const Offset(0, 1),
                                             end: Offset.zero,
                                           ).animate(animation);
 
@@ -306,12 +334,11 @@ class _HomeViewState extends State<HomeView> {
                                       ),
                                     );
                                   },
-
                                   child: Container(
-                                    height: 80,
+                                    height: cardItemHeight,
                                     decoration: BoxDecoration(
                                       color: const Color(0xFF3B4252),
-                                      borderRadius: const BorderRadius.only(
+                                      borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(16),
                                         topRight: Radius.circular(16),
                                       ),
@@ -319,26 +346,31 @@ class _HomeViewState extends State<HomeView> {
                                         BoxShadow(
                                           color: Colors.black.withOpacity(0.15),
                                           blurRadius: 12,
-                                          offset: const Offset(0, 6),
+                                          offset: Offset(0, 6),
                                         ),
                                       ],
                                     ),
-                                    child: const Padding(
-                                      padding: EdgeInsets.fromLTRB(20, 16, 20, 20),
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                        isSmallScreen ? 12 : 20,
+                                        isSmallScreen ? 8 : 16,
+                                        isSmallScreen ? 12 : 20,
+                                        isSmallScreen ? 12 : 20,
+                                      ),
                                       child: Row(
                                         children: [
                                           Icon(
                                             Icons.grid_view,
                                             color: Colors.white,
-                                            size: 24,
+                                            size: isSmallScreen ? 18 : 24,
                                           ),
-                                          SizedBox(width: 12),
+                                          SizedBox(width: isSmallScreen ? 8 : 12),
                                           Expanded(
                                             child: Text(
                                               'Vista avanzada',
                                               style: TextStyle(
                                                 color: Colors.white,
-                                                fontSize: 18,
+                                                fontSize: isSmallScreen ? 15 : 18,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
@@ -347,15 +379,15 @@ class _HomeViewState extends State<HomeView> {
                                             'Ver todo',
                                             style: TextStyle(
                                               color: Colors.white70,
-                                              fontSize: 16,
+                                              fontSize: isSmallScreen ? 13 : 16,
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
-                                          SizedBox(width: 8),
+                                          SizedBox(width: isSmallScreen ? 6 : 8),
                                           Icon(
                                             Icons.arrow_forward_ios,
                                             color: Colors.white70,
-                                            size: 16,
+                                            size: isSmallScreen ? 13 : 16,
                                           ),
                                         ],
                                       ),
@@ -366,27 +398,31 @@ class _HomeViewState extends State<HomeView> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        SizedBox(height: isSmallScreen ? 14 : 140),
 
                         // Texto de contacto
-                        const Center(
+                        Center(
                           child: Text.rich(
                             TextSpan(
                               text: '¿Necesitas ayuda? ',
-                              style: TextStyle(color: Colors.white70),
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: isSmallScreen ? 11 : 14,
+                              ),
                               children: [
                                 TextSpan(
                                   text: 'Contáctanos',
                                   style: TextStyle(
                                     color: green,
                                     fontWeight: FontWeight.bold,
+                                    fontSize: isSmallScreen ? 11 : 14,
                                   ),
                                 ),
                               ],
                             ),
                           ),
                         ),
-                        SizedBox(height: MediaQuery.of(context).padding.bottom + 16),
+                        SizedBox(height: MediaQuery.of(context).padding.bottom + (isSmallScreen ? 10 : 16)),
                       ],
                     ),
                   ),
@@ -534,12 +570,14 @@ class _HomeButton extends StatelessWidget {
   final String label;
   final Color color;
   final VoidCallback onTap;
+  final bool isSmallScreen;
 
   const _HomeButton({
     required this.icon,
     required this.label,
     required this.color,
     required this.onTap,
+    this.isSmallScreen = false,
   });
 
   @override
@@ -555,7 +593,7 @@ class _HomeButton extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: color, size: 32),
+            Icon(icon, color: color, size: isSmallScreen ? 28 : 32),
             const SizedBox(height: 8),
             Text(
               label,
