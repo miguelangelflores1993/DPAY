@@ -25,7 +25,7 @@ class AdvancedView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Top bar
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -35,7 +35,12 @@ class AdvancedView extends StatelessWidget {
                           children: [
                             _CircleIcon(icon: Icons.help_outline),
                             SizedBox(width: 12),
-                            _CircleIcon(icon: Icons.close),
+                            GestureDetector(
+                              child: _CircleIcon(icon: Icons.close),
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                            ),
                           ],
                         ),
                       ],
@@ -54,7 +59,7 @@ class AdvancedView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 32),
-                  
+
                   // Grid de servicios 4x3 - Versión mejorada
                   Expanded(
                     child: Padding(
@@ -110,7 +115,7 @@ class AdvancedView extends StatelessWidget {
               ),
             ),
           ),
-          
+
           // DraggableScrollableSheet para transacciones
           DraggableScrollableSheet(
             initialChildSize: 0.48,
@@ -211,7 +216,7 @@ class AdvancedView extends StatelessWidget {
           ),
         ],
       ),
-      
+
       // Bottom navigation bar
       bottomNavigationBar: Container(
         height: 80,
